@@ -1,0 +1,28 @@
+<%-include("header")%>
+<link rel="stylesheet" href="/css/dash.css">
+<%-include("sidebar",{data:data})%>
+<div class="content">
+    <div class="upload">
+        <div class="upload-form">
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            
+            <div class="custom-file">
+                <input type="text"  class="form-control" name="image_name">
+                <br>
+                <input type="file" name="file">
+                
+              </div>
+               <button type="submit" name="btn" value="upload" class="upload-button btn btn-dark">UPLOAD</button>
+            <hr  width="20px"> 
+                                            if you have link
+            <div class="custom-file ">
+                <input type="text" class="form-control" placeholder="Paste Here" name="image_link" id="link"">
+                <hr>
+                <%=status%>
+              </div>
+        </form>
+    </div>
+    </div>
+
+</div>
+

@@ -1,0 +1,23 @@
+<div class="nav">
+    <div class="nav-title"><h2>ART_CREATIVITY</h2></div>
+    <div class="right_side">
+        <form action="/" method="post">
+        <button type="submit" class="btn-danger btn">Logout</button>
+    </form>
+    </div>
+</div>
+<div class="sidebar">
+    <header>
+        <img src=<%=data.profile_img%> alt="Profile" id="profile">
+        <div>
+            <span><%=data.profile_name%></span>
+        </div>
+    </header>
+    <div>
+        <a href="/home"><i class="fa fa-laptop"></i><span>HOME</span></a>
+        <a href="/upload"><i class="fa fa-upload"></i><span>UPLOAD</span></a>
+        
+        <a href="/contact"><i class="fa fa-id-card"></i><span>CONTACT</span></a>
+
+    </div>
+</div>
