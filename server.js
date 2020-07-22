@@ -9,7 +9,7 @@ const upload=require("./route/upload")
 const session=require("express-session");
 const imageModel=require("./data/img-model")
 const profile=require("./route/profile")
-
+const bcrypt = require('bcrypt')
 
 const sess={
     name:"photo",
@@ -54,14 +54,16 @@ const isconnect = (req,res,next)=>{
     next()
     return
 } 
-app.post("/",isconnect,function(req,res){
+app.post("/",isconnect,async function(req,res){
     req.session.email=req.body.email
+    const hash=await bcrypt.hash(req.body.password,10)
+        
     if(req.body.btn=="register"){
         //Creating User document
         const User =new auth({
             username:req.body.name,
             email:req.body.email,
-            password:req.body.password
+            password:hash
         })
         //Save data into MongoDB
         User.save( function(err,result){
@@ -87,7 +89,9 @@ app.post("/",isconnect,function(req,res){
             }
             if(result){
                console.log(result+"user found")
-                if(result.password==req.body.password){
+               //bcrypt.compareSync(myPlaintextPassword, hash); //true
+                
+               if(bcrypt.compareSync(req.body.password,result.password)){
                    if(req.session){
                     req.session.email=result.email
                     req.session.name=result.username

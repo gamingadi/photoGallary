@@ -15,7 +15,7 @@ router.get("/home",function(req,res){
     
     if(req.session.email){
         dataModel.findOne({email:req.session.email},function(err,result){
-            console.log(result)
+            
             req.session.data=result//doing for upload route 
             res.render("home",{data:result,name:req.session.name})
             
