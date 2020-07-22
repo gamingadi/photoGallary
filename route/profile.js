@@ -24,17 +24,6 @@ const storage=multer.diskStorage({
 
 const upload=multer({storage:storage})
 
-router.get("/",function(req,res){
-    
-    data.findOne({email:req.session.email},function(err,result){
-        if(result){
-            res.send(result.profile)
-        }else{
-            res.send("Somthing Wrong")
-        }
-    })
-    
-})
 router.post("/",upload.single("file"),function(req,res){
     let filepath="profileimage/"+req.file.originalname
 if(req.file){

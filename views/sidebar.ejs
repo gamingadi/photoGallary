@@ -1,8 +1,13 @@
 <%-include("model",{profile:profile})%>
 
 <div class="nav">
+    <div class="nav-title"> 
+        <h2>
+        <%=profilename%>
+    </h2>
+    </div>
     <div class="right_side">
-        <form action="/" method="post">
+        <form action="/logout" method="post">
         <button type="submit" class="btn-danger btn">Logout</button>
     </form>
     </div>
@@ -15,14 +20,15 @@
         <button type="button" class="btn" data-toggle="modal"  data-target="#exampleModal">
             Change profile 
           </button>
-        <div>
-            <span><%=profilename%></span>
+        
+        <div style="font-family: Georgia, 'Times New Roman', Times, serif;">
+            <h2><%=profilename%></h2>
         </div>
     
     </header>
     <div class="sidebar-link">
         <a href="/home"><i class="fa fa-laptop"></i><span>HOME</span></a>
-        <a href="/upload"><i class="fa fa-upload"></i><span>UPLOAD</span></a>
-        <a href="/contact"><i class="fa fa-id-card"></i><span>CONTACT</span></a>
+        <a href="/image"><i class="fa fa-upload"></i><span>UPLOAD</span></a>
+        <a href="/new"><i class="fa fa-inbox"></i><span>inbox</span></a>
     </div>
 </div>
