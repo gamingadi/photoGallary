@@ -14,17 +14,7 @@
           </button>
         </div>
         <div class="modal-body">
-            <form action="/" id="myform" method="post">
-          <h1 class="h3 mb-3 font-weight-normal">Welcome <br><i class="fa fa-camera" style="font-size:48px;color:#4a9396"></i></h1>    
-          <input type="text" id="inputText" name="name" class="form-control" placeholder="Enter your Name" required autofocus>
-          <label for="inputEmail" class="sr-only">Email address</label>
-          <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>
-          <label for="inputPassword" class="sr-only">Password</label>
-          <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
-          <input type="password" name="comfirm_password" id="comfirm_password" class="form-control" placeholder="Confirm Password" required>
-                <span> <br> </span>
-                <button type="submit" class="btn btn-success " name="btn" value="register">REGISTOR</button>
-                </form>
+            <%-include("register")%>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

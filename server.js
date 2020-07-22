@@ -6,79 +6,100 @@ const dashboard=require("./route/home")
 const mongoose = require('mongoose');
 const auth=require("./data/login-model")
 const upload=require("./route/upload")
+const session=require("express-session");
+const imageModel=require("./data/img-model")
+const profile=require("./route/profile")
 
 
+const sess={
+    name:"photo",
+    secret:'For friends',
+    resave:true,
+    saveUninitialized:true,
+    cookie:{path:"/",maxAge:1000*60*60}
+}
 
-mongoose.connect('mongodb://localhost:27017/test', { useNewUrlParser: true,useUnifiedTopology:true,useCreateIndex:true }).
-  catch(error => console.log(error));
-app.use(bodyParser.urlencoded({extended:true}))
-app.use("/home",dashboard)
-app.use(express.static("public"))
-app.use("/upload",upload)
-app.set("view engine","ejs")
+if (app.get('env') === 'production') {
+    app.set('trust proxy', 1) // trust first proxy
+    sess.cookie.secure = true // serve secure cookies
+  }
+  app.use(session(sess))
+app.use(express.static("upload"))
+mongoose.connect('mongodb://localhost:27017/gallary',
+ { useNewUrlParser: true,
+    useUnifiedTopology:true,
+    useCreateIndex:true,
+    useFindAndModify:false
 
-auth.find(function(err,result){
-     console.log(result)
-})
-// auth.findOne({password:"w"},function(err,result){
-//     console.log(result)
+}).catch(error => console.log("database disconnected"));
+  app.use(bodyParser.urlencoded({extended:true}))
+   
+    app.set("view engine","ejs")
+    app.use("/",dashboard)
+    app.use(express.static("public"))
+    app.use("/upload",upload)
+    app.use("/profile",profile)
 
-// })
+
 
 app.get("/",function(req,res){
-    res.render("login",{data:data,status:""})
+ 
+   res.render("login",{data:data,status:""})
 });
-
 const isconnect = (req,res,next)=>{
     mongoose.connect('mongodb://localhost:27017/gallary', { useNewUrlParser: true,useUnifiedTopology:true,useCreateIndex:true }).
-  catch(error => {console.log(error);
+  catch(error => {
         res.render("login",{data:data,status:"database not connected"})
     })
     next()
     return
 } 
-
 app.post("/",isconnect,function(req,res){
-   
+    req.session.email=req.body.email
     if(req.body.btn=="register"){
-        const data =new auth({
+        //Creating User document
+        const User =new auth({
             username:req.body.name,
             email:req.body.email,
             password:req.body.password
         })
-        data.save( function(err,result){
-            console.log("inside save"+result)
+        //Save data into MongoDB
+        User.save( function(err,result){
             if(err){
                 res.render("login",{status:"something wrong"}) 
             }else{
-
-                res.render("login",{status:"Register completed"})
-            }
-            
+                //Here,email are also stores in file collections 
+                const data=new imageModel({
+                    email:result.email,
+                    profile:"profileimage/woman-1807533_1920.jpg"
+                })
+                data.save((err,result)=>{
+                    res.render("login",{status:"Register completed"})
+                })                
+            }  
         })
-        // .then((result)=>{
-        //     res.render("login",{status:"Register completed"})
-        
-        
-        // }).catch((error)=>{
-        //     res.render("login",{status:"something wrong"})
-        // })
-        
     }
     if(req.body.btn=="Login"){
-        console.log(req.body)
-       auth.findOne({email:req.body.email},function(error,result){    
-        if(error){
+     
+       auth.findOne({email:req.body.email},function(err,result){    
+        if(err){
             res.redirect("/")
-            }else{
-               console.log(result)
+            }
+            if(result){
+               console.log(result+"user found")
                 if(result.password==req.body.password){
-                   
-                    res.render("home",{data:data})
-
+                   if(req.session){
+                    req.session.email=result.email
+                    req.session.name=result.username
+                    res.redirect("/home")
+                    }else{
+                        res.redirect("/")
+                    }
                 }else{
-                    res.redirect("/login")
+                    res.render("login",{status:"Wrong password"})
                 }   
+           }else{
+            res.render("login",{status:"Invalid Email"})
            }
         })   
     }

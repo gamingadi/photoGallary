@@ -1,0 +1,18 @@
+<%-include("header")%>
+<body>
+  
+<img src=<%=profile%> id="model-img" alt=<%=profile%>> 
+
+  <h3>Current profile</h3>
+<form action="/profile" method="post" enctype="multipart/form-data">
+            <div class="custom-file">
+                <br>
+                <input type="file" name="file"> 
+              </div>
+              <br>
+               <button type="submit" style="display: none;" name="btn" id="btn-upload" value="upload" class="upload-button btn btn-dark">UPLOAD</button>
+            <div class="custom-file ">
+                <%=status%>
+              </div>
+        </form>
+<%-include("footer")%>

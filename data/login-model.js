@@ -12,8 +12,7 @@ const loginSchema=new mongoose.Schema({
     password:{
         type:String,
         required:[1]
-    },
-    img_link:imgModel.Schema
+    }
 })
 const auth=mongoose.model("login",loginSchema);
 module.exports=auth;

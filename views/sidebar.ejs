@@ -1,23 +1,28 @@
+<%-include("model",{profile:profile})%>
+
 <div class="nav">
-    <div class="nav-title"><h2>ART_CREATIVITY</h2></div>
     <div class="right_side">
         <form action="/" method="post">
         <button type="submit" class="btn-danger btn">Logout</button>
     </form>
     </div>
 </div>
-<div class="sidebar">
+
+<div class="sidebar" style="z-index: 1;">
+   
     <header>
-        <img src=<%=data.profile_img%> alt="Profile" id="profile">
+        <img src="<%=profile%>" alt="<%=profile%>" id="profile" data-toggle="modal"  data-target="#exampleModal">
+        <button type="button" class="btn" data-toggle="modal"  data-target="#exampleModal">
+            Change profile 
+          </button>
         <div>
-            <span><%=data.profile_name%></span>
+            <span><%=profilename%></span>
         </div>
+    
     </header>
-    <div>
+    <div class="sidebar-link">
         <a href="/home"><i class="fa fa-laptop"></i><span>HOME</span></a>
         <a href="/upload"><i class="fa fa-upload"></i><span>UPLOAD</span></a>
-        
         <a href="/contact"><i class="fa fa-id-card"></i><span>CONTACT</span></a>
-
     </div>
 </div>

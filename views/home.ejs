@@ -1,17 +1,20 @@
 <%-include("header");%>
 <link rel="stylesheet" href="/css/dash.css">
 <body>
-<%-include("sidebar",{data:data})%>
-<div class="content">
+<%-include("sidebar",{profile:data.profile,profilename:name})%>
+<div class="content" style="text-align: center;">
 <div class="card-div-container">
-    <%for(var i=0;i<data.img.length;i++){%>
+    
+    <%for(var i=0;i<data.link.length;i++){%>
     <div class="card-div">
-        <%-include("card",{data:data.img[i]});%>
+
+        <%-include("card",{data:data.link[i]});%>
     </div>
     <%}%>
 </div>
 </div>
 </div>
+<%-include("footer")%>
 
 
 
