@@ -20,9 +20,9 @@ router.get("/home",function(req,res){
             res.render("home",{data:result,name:req.session.name,})
             
         })
-    }else{
+    }else{req.session.currentpage=req.originalUrl
         res.redirect("/")
-        req.session.currentpage=req.originalUrl
+        
     }
     
 });

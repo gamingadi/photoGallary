@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const app =express();
 const bodyParser=require("body-parser")
@@ -13,7 +14,7 @@ const bcrypt = require('bcrypt')
 
 const sess={
     name:"photo",
-    secret:'For friends',
+    secret:process.env.SECRET,
     resave:true,
     saveUninitialized:true,
     cookie:{path:"/",maxAge:1000*60*60}
@@ -25,7 +26,7 @@ if (app.get('env') === 'production') {
   }
   app.use(session(sess))
 app.use(express.static("upload"))
-mongoose.connect('mongodb+srv://aditya:aditya10@gallary.fbhcg.mongodb.net/gallary?retryWrites=true&w=majority',
+mongoose.connect(`mongodb+srv://aditya:${process.env.API_KEY}@gallary.fbhcg.mongodb.net/gallary?retryWrites=true&w=majority`,
  { useNewUrlParser: true,
     useUnifiedTopology:true,
     useCreateIndex:true,
@@ -47,7 +48,7 @@ app.get("/",function(req,res){
    res.render("login",{data:data,status:""})
 });
 const isconnect = (req,res,next)=>{
-    mongoose.connect('mongodb+srv://aditya:aditya10@gallary.fbhcg.mongodb.net/gallary?retryWrites=true&w=majority', { useNewUrlParser: true,useUnifiedTopology:true,useCreateIndex:true }).
+    mongoose.connect('mongodb+srv://aditya:@gallary.fbhcg.mongodb.net/gallary?retryWrites=true&w=majority', { useNewUrlParser: true,useUnifiedTopology:true,useCreateIndex:true }).
   catch(error => {
         res.render("login",{data:data,status:"database not connected"})
     })
@@ -109,7 +110,8 @@ app.post("/",isconnect,async function(req,res){
     }
        
 })
-app.listen( 3000,function(){
+
+app.listen( process.env.PORT,function(){
         
     console.log("Server started at 3000")
 });
