@@ -22,22 +22,10 @@ router.use((req,res,next)=>{
         res.redirect("/")
     }
 })
-
-
 router.get("/",function(req,res){
-    //console.log(req.session.data)
-    //problem can't render image directly from session data but in alt shows the path
-    //maybe problem of syntex or path because of app.use(express.static("upload"))
-    req.session.currentpage=req.originalUrl
-    let data=req.session.data.profile 
-    let e=data.substring(data.indexOf('/')+1)
-    
-    res.render("upload",{
-        profile:e,
-        name:req.session.name,
-        status:""})
 
-});
+    res.render("upload",{profile:"/"+req.session.data.profile,name:req.session.name,status:""})
+})
 //multer middle take care of uploading file & all opreation
 router.post("/",upload.single("file"),async function(req,res){
    //save the data of file in database
@@ -54,8 +42,8 @@ router.post("/",upload.single("file"),async function(req,res){
                     res.render("upload",{profile:result.profile,name:req.session.name, status:"Database issue"})
                 }
             })
-        }else{
-        res.redirect("/upload")
     }
+    else{
+        res.redirect("/upload")}
 })
 module.exports=router;

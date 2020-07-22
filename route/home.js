@@ -17,7 +17,7 @@ router.get("/home",function(req,res){
         dataModel.findOne({email:req.session.email},function(err,result){
             
             req.session.data=result//doing for upload route 
-            res.render("home",{data:result,name:req.session.name})
+            res.render("home",{data:result,name:req.session.name,})
             
         })
     }else{
@@ -26,5 +26,14 @@ router.get("/home",function(req,res){
     }
     
 });
+router.post("/logout",function(req,res){
+    req.session.destroy(function(req,res){
+        console.log("logout")
+    })
+    res.redirect("/")
+})
+router.get("/new" ,function(req,res){
+    res.render("pending")
+})
 
 module.exports=router;
