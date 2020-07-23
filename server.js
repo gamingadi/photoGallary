@@ -26,7 +26,7 @@ const sess={
     secret:process.env.SECRET,
     resave:true,
     saveUninitialized:true,
-    cookie:{path:"/",maxAge:1000*60*60}
+    cookie:{path:"/",maxAge:1000*60*5}
 }
 
 if (app.get('env') === 'production') {
