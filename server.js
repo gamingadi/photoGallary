@@ -25,7 +25,7 @@ if (app.get('env') === 'production') {
   }
   app.use(session(sess))
 app.use(express.static("upload"))
-mongoose.connect('mongodb+srv://aditya:aditya10@gallary.fbhcg.mongodb.net/gallary?retryWrites=true&w=majority',
+mongoose.connect('mongodb+srv://aditya:@gallary.fbhcg.mongodb.net/gallary?retryWrites=true&w=majority',
  { useNewUrlParser: true,
     useUnifiedTopology:true,
     useCreateIndex:true,
@@ -47,7 +47,7 @@ app.get("/",function(req,res){
    res.render("login",{data:data,status:""})
 });
 const isconnect = (req,res,next)=>{
-    mongoose.connect('mongodb+srv://aditya:aditya10@gallary.fbhcg.mongodb.net/gallary?retryWrites=true&w=majority', { useNewUrlParser: true,useUnifiedTopology:true,useCreateIndex:true }).
+    mongoose.connect('mongodb+srv://aditya:ENV.PROCESS.Pass@gallary.fbhcg.mongodb.net/gallary?retryWrites=true&w=majority', { useNewUrlParser: true,useUnifiedTopology:true,useCreateIndex:true }).
   catch(error => {
         res.render("login",{data:data,status:"database not connected"})
     })
